@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CsvReader.Models.Transaction>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Transactions</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-dismissible alert-danger" align="left">
+        <p>
+            No records to display.
+        </p>
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Account</th>
+            <th>Description</th>
+            <th>Currency Code</th>
+            <th>Amount</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.Account</td>
+                <td>@transaction.Description</td>
+                <td>@transaction.CurrencyCode</td>
+                <td>@transaction.Amount</td>
+                <td>
+                    @Html.ActionLink("Remove", "DeleteConfirmation", "Home", new {id = transaction.Id}, new {@class = "btn btn-danger"})
+                    @Html.ActionLink("Edit", "Edit", "Home", new { id = transaction.Id }, new { @class = "btn btn-warning" })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
